@@ -24,7 +24,7 @@ app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
 // Static Asset Serving
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/views', express.static(path.join(__dirname, 'views')));
+app.use(express.static(path.join(__dirname, 'views')));
 
 // API Routes
 app.use('/api/auth', authRoutes);
@@ -33,17 +33,19 @@ app.use('/api/ai', aiRoutes);
 app.use('/api/chat', chatRoutes);
 app.use('/api/analytics', analyticsRoutes);
 
-// Main Single-Page Application View
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'views', 'index.html'));
-});
-
-// Fallback Route for SPA
-app.use((req, res, next) => {
-  if (req.method === 'GET' && !req.path.startsWith('/api')) {
-    return res.sendFile(path.join(__dirname, 'views', 'index.html'));
+// Main Single-Page Application View & SPA Wildcard Route
+app.get('*', (req, res, next) => {
+  if (req.path.startsWith('/api')) {
+    return next();
   }
-  next();
+  res.sendFile(path.join(__dirname, 'views', 'index.html'), (err) => {
+    if (err) {
+      console.error('Error serving index.html:', err);
+      if (!res.headersSent) {
+        res.status(500).send('Error loading page');
+      }
+    }
+  });
 });
 
 // Global Error Handler
