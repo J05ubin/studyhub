@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const upload = require('../middlewares/uploadMiddleware');
+const upload = require('../config/multer');
 const { uploadDocument, getAllDocuments, deleteDocument } = require('../controllers/documentController');
 
 // POST /api/documents/upload
