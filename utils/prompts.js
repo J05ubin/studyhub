@@ -207,6 +207,9 @@ Return ONLY valid JSON:
   ]
 }
 
+Document Context:
+${context}`,
+
   vivaQuestions: (context) => `
 ${RAG_SYSTEM_INSTRUCTION}
 
