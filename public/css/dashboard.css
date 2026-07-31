@@ -41,7 +41,7 @@
   justify-content: center;
   color: #fff;
   font-size: 1.4rem;
-  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+  box-shadow: 0 4px 12px rgba(16, 163, 127, 0.4);
 }
 
 .brand-title {
@@ -84,7 +84,7 @@
 .theme-toggle-btn.active {
   background: var(--accent-primary);
   color: #ffffff;
-  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.4);
+  box-shadow: 0 2px 8px rgba(16, 163, 127, 0.4);
 }
 
 /* Layout Body */

@@ -30,15 +30,14 @@ async function handleAIToolRequest(req, res) {
       const jsonTools = [
         'detailedNotes', 'mcqGenerator', 'quizGenerator', 'practiceTest',
         'flowchartGenerator', 'mindmapGenerator', 'flashcards', 'importantQuestions',
-        'pyqAnalysis', 'vivaQuestions', 'interviewQuestions', 'formulaSheet',
-        'codingQuestions', 'personalizedStudyPlan', 'revisionPlanner'
+        'vivaQuestions', 'interviewQuestions'
       ];
 
       if (jsonTools.includes(toolType)) {
         const parsed = parseCleanJSON(rawResponse);
         return res.json({ success: true, toolType, data: parsed });
       } else {
-        // Markdown response tools: shortNotes, smartSummary, cheatSheet
+        // Markdown response tools: shortNotes, smartSummary
         return res.json({ success: true, toolType, data: rawResponse });
       }
 
@@ -88,35 +87,11 @@ async function handleAIToolRequest(req, res) {
         case 'importantQuestions':
           fallbackData = fallbackService.generateFallbackImportantQuestions();
           break;
-        case 'pyqAnalysis':
-          fallbackData = fallbackService.generateFallbackPYQAnalysis();
-          break;
         case 'vivaQuestions':
           fallbackData = fallbackService.generateFallbackVivaQuestions();
           break;
         case 'interviewQuestions':
           fallbackData = fallbackService.generateFallbackInterviewQuestions();
-          break;
-        case 'formulaSheet':
-          fallbackData = fallbackService.generateFallbackFormulaSheet();
-          break;
-        case 'cheatSheet':
-          fallbackData = `### ⚡ Last-Minute Exam Cheat Sheet: ${docTitle}\n\n` +
-            `| Topic | Key Formula / Definition | High-Yield Tip |\n` +
-            `| :--- | :--- | :--- |\n` +
-            `| **Vector Similarity** | cos(θ) = (A · B) / (||A||*||B||) | Values close to 1 = High relevance |\n` +
-            `| **RAG Grounding** | Retrieved Context + System Prompt | Always prioritize document context |\n` +
-            `| **Spaced Repetition** | Day 1, 3, 7, 14 Revision | Best retention method |\n\n` +
-            `> **⚠️ Quick Warning**: Always check units before writing final formulas in calculations!`;
-          break;
-        case 'codingQuestions':
-          fallbackData = fallbackService.generateFallbackCodingQuestions();
-          break;
-        case 'personalizedStudyPlan':
-          fallbackData = fallbackService.generateFallbackStudyPlan();
-          break;
-        case 'revisionPlanner':
-          fallbackData = fallbackService.generateFallbackRevisionPlanner();
           break;
         default:
           fallbackData = { message: "Generated fallback content." };

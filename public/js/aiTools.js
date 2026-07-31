@@ -3,7 +3,7 @@
  */
 
 const AI_TOOLS = [
-  { id: 'detailedNotes', title: 'Detailed Notes Generator', icon: 'fa-book-open', badge: 'Structured', color: '#6366f1', desc: 'Comprehensive study notes with Intro, Simple & Detailed Explanation, Examples, Pros/Cons, Memory Tricks, and Exam Tips.' },
+  { id: 'detailedNotes', title: 'Detailed Notes Generator', icon: 'fa-book-open', badge: 'Structured', color: '#10a37f', desc: 'Comprehensive study notes with Intro, Simple & Detailed Explanation, Examples, Pros/Cons, Memory Tricks, and Exam Tips.' },
   { id: 'shortNotes', title: 'Short Notes Generator', icon: 'fa-file-lines', badge: 'High Yield', color: '#a855f7', desc: 'Concise bullet points, key takeaways, and definitions ideal for rapid exam revision.' },
   { id: 'smartSummary', title: 'Smart Summary', icon: 'fa-compress', badge: 'Overview', color: '#06b6d4', desc: 'Executive summary with key highlights, core concept matrix, and takeaways.' },
   { id: 'mcqGenerator', title: 'MCQ Generator', icon: 'fa-list-check', badge: 'Customizable', color: '#10b981', desc: 'Generate MCQs filtered by question count, difficulty level, and source notes.' },
@@ -13,16 +13,10 @@ const AI_TOOLS = [
   { id: 'flowchartGenerator', title: 'Flowchart Generator', icon: 'fa-diagram-project', badge: 'Mermaid.js', color: '#3b82f6', desc: 'Automated process workflows and system execution flowcharts rendered via Mermaid.js.' },
   { id: 'mindmapGenerator', title: 'Mind Map Generator', icon: 'fa-sitemap', badge: 'Mermaid.js', color: '#8b5cf6', desc: 'Chapter hierarchy and concept tree mind maps rendered visually.' },
   { id: 'importantQuestions', title: 'Important Questions', icon: 'fa-star', badge: 'High Probable', color: '#f59e0b', desc: 'Top high-yield exam questions categorized by weightage marks.' },
-  { id: 'pyqAnalysis', title: 'PYQ Analysis', icon: 'fa-chart-pie', badge: 'Trend Mapping', color: '#14b8a6', desc: 'Previous Year Questions pattern breakdown, unit weightage %, and repeated topic predictions.' },
   { id: 'vivaQuestions', title: 'Viva Questions', icon: 'fa-comments', badge: 'Oral Q&A', color: '#84cc16', desc: 'Rapid-fire viva questions with examiner tips and ideal concise oral answers.' },
   { id: 'interviewQuestions', title: 'Interview Questions', icon: 'fa-briefcase', badge: 'Technical', color: '#6366f1', desc: 'Technical & scenario interview questions with STAR method structured answers.' },
-  { id: 'formulaSheet', title: 'Formula Sheet', icon: 'fa-calculator', badge: 'Quick Ref', color: '#06b6d4', desc: 'Mathematical equations, variables, units, and notes compiled into a reference sheet.' },
-  { id: 'cheatSheet', title: 'Cheat Sheet', icon: 'fa-bolt', badge: '1-Pager', color: '#eab308', desc: 'Ultimate 1-page last minute revision cheat sheet with quick comparison tables.' },
-  { id: 'codingQuestions', title: 'Coding Questions', icon: 'fa-code', badge: 'Algorithms', color: '#10b981', desc: 'Algorithm challenges derived from study notes with C++, Python, and Java solutions.' },
   { id: 'aiChat', title: 'GINI AI', icon: 'fa-robot', badge: 'Coming Soon', color: '#a855f7', desc: 'Personalized AI Study Assistant (Coming Soon)' },
-  { id: 'analytics', title: 'Performance Analytics', icon: 'fa-chart-column', badge: 'Diagnostic', color: '#f43f5e', desc: 'Accuracy graphs, topic weakness matrix, and predicted exam readiness score.' },
-  { id: 'personalizedStudyPlan', title: 'Personalized Study Plan', icon: 'fa-calendar-days', badge: 'Roadmap', color: '#3b82f6', desc: 'Custom day-by-day study roadmap customized for your exam target date.' },
-  { id: 'revisionPlanner', title: 'Revision Planner', icon: 'fa-repeat', badge: 'Spaced Repetition', color: '#8b5cf6', desc: 'Spaced repetition schedule (Day 1, 3, 7, 14) to eliminate memory decay.' }
+  { id: 'analytics', title: 'Performance Analytics', icon: 'fa-chart-column', badge: 'Diagnostic', color: '#f43f5e', desc: 'Accuracy graphs, topic weakness matrix, and predicted exam readiness score.' }
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -281,257 +275,17 @@ function renderToolResponse(toolType, data) {
     renderMindmapDiagram(body, data);
   } else if (toolType === 'importantQuestions') {
     renderImportantQuestionsView(body, data);
-  } else if (toolType === 'pyqAnalysis') {
-    renderPYQAnalysisView(body, data);
   } else if (toolType === 'vivaQuestions') {
     renderVivaQuestionsView(body, data);
   } else if (toolType === 'interviewQuestions') {
     renderInterviewQuestionsView(body, data);
-  } else if (toolType === 'formulaSheet') {
-    renderFormulaSheetView(body, data);
-  } else if (toolType === 'codingQuestions') {
-    renderCodingQuestionsView(body, data);
-  } else if (toolType === 'personalizedStudyPlan') {
-    renderStudyPlanView(body, data);
-  } else if (toolType === 'revisionPlanner') {
-    renderRevisionPlannerView(body, data);
   } else {
-    // Markdown or HTML string response tools: shortNotes, smartSummary, cheatSheet
+    // Markdown or HTML string response tools: shortNotes, smartSummary
     body.innerHTML = `
       <div class="glass-panel" style="padding: 24px; line-height: 1.6; font-size: 0.95rem;">
         ${formatMarkdownHTML(typeof data === 'string' ? data : JSON.stringify(data, null, 2))}
       </div>`;
   }
-}
-
-function renderDetailedNotesView(container, data) {
-  if (!data) {
-    container.innerHTML = '<div>No detailed notes available.</div>';
-    return;
-  }
-  container.innerHTML = `
-    <div style="display: flex; flex-direction: column; gap: 20px;">
-      <h2 style="font-size: 1.4rem; font-weight: 800; color: var(--accent-primary);">${data.title || 'Detailed Notes'}</h2>
-      
-      <div class="glass-panel" style="padding: 18px;">
-        <h4 style="color: var(--accent-secondary); margin-bottom: 6px;"><i class="fa-solid fa-compass"></i> Introduction</h4>
-        <p style="font-size: 0.92rem; line-height: 1.6; color: var(--text-primary);">${data.introduction || ''}</p>
-      </div>
-
-      <div class="glass-panel" style="padding: 18px;">
-        <h4 style="color: var(--accent-cyan); margin-bottom: 6px;"><i class="fa-solid fa-lightbulb"></i> Simple Explanation</h4>
-        <p style="font-size: 0.92rem; line-height: 1.6;">${data.simpleExplanation || ''}</p>
-      </div>
-
-      <div class="glass-panel" style="padding: 18px;">
-        <h4 style="color: var(--accent-emerald); margin-bottom: 6px;"><i class="fa-solid fa-book-open-reader"></i> Detailed Explanation</h4>
-        <p style="font-size: 0.92rem; line-height: 1.6;">${data.detailedExplanation || ''}</p>
-      </div>
-
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-        <div class="glass-panel" style="padding: 18px;">
-          <h4 style="color: var(--accent-emerald); margin-bottom: 8px;"><i class="fa-solid fa-circle-check"></i> Advantages</h4>
-          <ul style="padding-left: 20px; font-size: 0.88rem; line-height: 1.6;">
-            ${(data.advantages || []).map(a => `<li>${a}</li>`).join('')}
-          </ul>
-        </div>
-
-        <div class="glass-panel" style="padding: 18px;">
-          <h4 style="color: var(--accent-rose); margin-bottom: 8px;"><i class="fa-solid fa-circle-xmark"></i> Disadvantages</h4>
-          <ul style="padding-left: 20px; font-size: 0.88rem; line-height: 1.6;">
-            ${(data.disadvantages || []).map(d => `<li>${d}</li>`).join('')}
-          </ul>
-        </div>
-      </div>
-
-      <div class="glass-panel" style="padding: 18px; border-left: 4px solid var(--accent-amber);">
-        <h4 style="color: var(--accent-amber); margin-bottom: 6px;"><i class="fa-solid fa-brain"></i> Memory Tricks & Mnemonics</h4>
-        <ul style="padding-left: 20px; font-size: 0.88rem; line-height: 1.6;">
-          ${(data.memoryTricks || []).map(m => `<li>${m}</li>`).join('')}
-        </ul>
-      </div>
-
-      <div class="glass-panel" style="padding: 18px; border-left: 4px solid var(--accent-primary);">
-        <h4 style="color: var(--accent-primary); margin-bottom: 6px;"><i class="fa-solid fa-graduation-cap"></i> Exam Tips</h4>
-        <ul style="padding-left: 20px; font-size: 0.88rem; line-height: 1.6;">
-          ${(data.examTips || []).map(t => `<li>${t}</li>`).join('')}
-        </ul>
-      </div>
-    </div>`;
-}
-
-function renderMCQView(container, data) {
-  const questions = data.questions || [];
-  container.innerHTML = `
-    <div style="display: flex; flex-direction: column; gap: 20px;">
-      ${questions.map((q, i) => `
-        <div class="glass-panel" style="padding: 20px;">
-          <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
-            <span class="badge badge-indigo">Q${i + 1} • ${q.topic || 'General'}</span>
-            <span class="badge badge-amber">${q.difficulty || 'Medium'}</span>
-          </div>
-          <div style="font-weight: 700; font-size: 1.05rem; margin-bottom: 14px;">${q.question}</div>
-          <div class="options-list">
-            ${(q.options || []).map((opt, idx) => `
-              <div class="option-btn ${idx === q.correctAnswer ? 'correct' : ''}">
-                <strong>${String.fromCharCode(65 + idx)}.</strong> ${opt}
-                ${idx === q.correctAnswer ? '<i class="fa-solid fa-check" style="margin-left: auto;"></i>' : ''}
-              </div>
-            `).join('')}
-          </div>
-          <div style="margin-top: 14px; font-size: 0.85rem; color: var(--text-secondary); background: var(--bg-secondary); padding: 12px; border-radius: var(--radius-sm);">
-            <strong>Explanation:</strong> ${q.explanation}
-          </div>
-        </div>
-      `).join('')}
-    </div>`;
-}
-
-function renderImportantQuestionsView(container, data) {
-  const qList = data.importantQuestions || [];
-  container.innerHTML = `
-    <div style="display: flex; flex-direction: column; gap: 16px;">
-      ${qList.map(q => `
-        <div class="glass-panel" style="padding: 20px;">
-          <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-            <span class="badge badge-emerald">${q.marks} Marks Question</span>
-            <span class="badge badge-rose">${q.frequency || 'Repeated'}</span>
-          </div>
-          <h4 style="font-size: 1.05rem; margin-bottom: 8px;">${q.question}</h4>
-          <p style="font-size: 0.88rem; color: var(--text-secondary);"><strong>Expected Answer Summary:</strong> ${q.expectedAnswerSummary}</p>
-        </div>
-      `).join('')}
-    </div>`;
-}
-
-function renderPYQAnalysisView(container, data) {
-  container.innerHTML = `
-    <div style="display: flex; flex-direction: column; gap: 20px;">
-      <div class="glass-panel" style="padding: 20px;">
-        <h3 style="color: var(--accent-primary); margin-bottom: 8px;"><i class="fa-solid fa-chart-pie"></i> PYQ Pattern Overview</h3>
-        <p style="font-size: 0.92rem; line-height: 1.5;">${data.overview || ''}</p>
-      </div>
-
-      <div class="glass-panel" style="padding: 20px;">
-        <h4 style="margin-bottom: 14px;">Unit Weightage Distribution</h4>
-        ${(data.unitWeightage || []).map(u => `
-          <div style="margin-bottom: 12px;">
-            <div style="display: flex; justify-content: space-between; font-size: 0.88rem; font-weight: 600;">
-              <span>${u.unit}</span>
-              <span>${u.percentage}%</span>
-            </div>
-            <div class="progress-bar-container">
-              <div class="progress-bar-fill" style="width: ${u.percentage}%;"></div>
-            </div>
-          </div>
-        `).join('')}
-      </div>
-    </div>`;
-}
-
-function renderVivaQuestionsView(container, data) {
-  const vList = data.vivaQuestions || [];
-  container.innerHTML = `
-    <div style="display: flex; flex-direction: column; gap: 16px;">
-      ${vList.map(v => `
-        <div class="glass-panel" style="padding: 18px;">
-          <h4 style="color: var(--accent-amber); margin-bottom: 6px;">Q: ${v.question}</h4>
-          <p style="font-size: 0.9rem; color: var(--text-primary); margin-bottom: 6px;"><strong>Ideal Answer:</strong> ${v.answer}</p>
-          <span style="font-size: 0.78rem; color: var(--text-muted);"><i class="fa-solid fa-user-ninja"></i> Examiner Tip: ${v.examinerTip}</span>
-        </div>
-      `).join('')}
-    </div>`;
-}
-
-function renderInterviewQuestionsView(container, data) {
-  const iList = data.interviewQuestions || [];
-  container.innerHTML = `
-    <div style="display: flex; flex-direction: column; gap: 16px;">
-      ${iList.map(item => `
-        <div class="glass-panel" style="padding: 20px;">
-          <span class="badge badge-indigo" style="margin-bottom: 8px;">${item.category}</span>
-          <h4 style="font-size: 1.05rem; margin-bottom: 8px;">${item.question}</h4>
-          <div style="font-size: 0.88rem; background: var(--bg-secondary); padding: 12px; border-radius: var(--radius-sm); margin-bottom: 8px;">
-            <strong>Answer Breakdown:</strong> ${item.detailedAnswer}
-          </div>
-        </div>
-      `).join('')}
-    </div>`;
-}
-
-function renderFormulaSheetView(container, data) {
-  const formulas = data.formulas || [];
-  container.innerHTML = `
-    <div style="display: flex; flex-direction: column; gap: 16px;">
-      <h3 style="color: var(--accent-cyan);">${data.title || 'Formula Sheet'}</h3>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;">
-        ${formulas.map(f => `
-          <div class="glass-panel" style="padding: 18px;">
-            <div style="font-weight: 700; color: var(--accent-primary); margin-bottom: 6px;">${f.name}</div>
-            <div style="font-family: monospace; font-size: 1.1rem; background: var(--bg-secondary); padding: 8px; border-radius: 4px; margin-bottom: 8px;">
-              ${f.expression}
-            </div>
-            <div style="font-size: 0.82rem; color: var(--text-secondary);"><strong>Variables:</strong> ${f.variables}</div>
-            <div style="font-size: 0.82rem; color: var(--text-muted);"><strong>Unit:</strong> ${f.unit || 'N/A'}</div>
-          </div>
-        `).join('')}
-      </div>
-    </div>`;
-}
-
-function renderCodingQuestionsView(container, data) {
-  const cList = data.codingQuestions || [];
-  container.innerHTML = `
-    <div style="display: flex; flex-direction: column; gap: 20px;">
-      ${cList.map(c => `
-        <div class="glass-panel" style="padding: 20px;">
-          <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-            <h3 style="font-size: 1.15rem;">${c.title}</h3>
-            <span class="badge badge-amber">${c.difficulty}</span>
-          </div>
-          <p style="font-size: 0.9rem; margin-bottom: 12px;">${c.problemStatement}</p>
-          <pre style="background: #0d1117; color: #58a6ff; padding: 14px; border-radius: var(--radius-sm); font-size: 0.85rem; overflow-x: auto; font-family: monospace;">${c.pythonSolution || c.cppSolution || c.javaSolution}</pre>
-        </div>
-      `).join('')}
-    </div>`;
-}
-
-function renderStudyPlanView(container, data) {
-  const days = data.dailySchedule || [];
-  container.innerHTML = `
-    <div style="display: flex; flex-direction: column; gap: 16px;">
-      <h3>${data.planTitle || 'Personalized Study Plan'}</h3>
-      <p style="font-size: 0.88rem; color: var(--text-muted);">${data.strategy || ''}</p>
-      <div style="display: flex; flex-direction: column; gap: 12px;">
-        ${days.map(d => `
-          <div class="glass-panel" style="padding: 16px; display: flex; align-items: center; justify-content: space-between;">
-            <div>
-              <span class="badge badge-indigo">Day ${d.day}</span>
-              <span style="font-weight: 700; margin-left: 10px;">${d.focusTopic}</span>
-              <div style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 4px;">Tasks: ${(d.tasks || []).join(' • ')}</div>
-            </div>
-            <span class="badge badge-emerald">${d.estimatedHours} Hours</span>
-          </div>
-        `).join('')}
-      </div>
-    </div>`;
-}
-
-function renderRevisionPlannerView(container, data) {
-  const phases = data.phases || [];
-  container.innerHTML = `
-    <div style="display: flex; flex-direction: column; gap: 16px;">
-      <h3>${data.scheduleName || 'Spaced Repetition Plan'}</h3>
-      <div style="display: flex; flex-direction: column; gap: 12px;">
-        ${phases.map(p => `
-          <div class="glass-panel" style="padding: 16px;">
-            <div style="font-weight: 700; color: var(--accent-amber);">${p.phase}</div>
-            <div style="font-size: 0.88rem; margin: 4px 0;">Topics: ${(p.topics || []).join(', ')}</div>
-            <div style="font-size: 0.82rem; color: var(--accent-emerald);">Action: ${p.action}</div>
-          </div>
-        `).join('')}
-      </div>
-    </div>`;
 }
 
 function formatMarkdownHTML(text) {

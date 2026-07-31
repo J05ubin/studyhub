@@ -162,9 +162,8 @@ function generateFallbackMindMap(docTitle = 'Subject Overview') {
       Vector Search
       Embedding Models
     Unit 3: Exam High-Yield
-      PYQs Analysis
-      Important Formulas
-      Cheat Sheet`
+      Important Questions
+      Viva & Interviews`
   };
 }
 
@@ -188,35 +187,8 @@ function generateFallbackImportantQuestions() {
       { id: 1, marks: 10, question: "Explain the architecture of Retrieval-Augmented Generation (RAG) with a neat block diagram. List its advantages over standard LLM prompting.", expectedAnswerSummary: "Define RAG, draw Ingestion + Querying pipeline, explain Vector DB, Cosine Similarity, and Grounding.", frequency: "Very High (4+ times)", topic: "AI Architecture" },
       { id: 2, marks: 10, question: "Compare and contrast Monolithic vs MVC Architecture. Explain how Controllers communicate with Services and Models in Node.js.", expectedAnswerSummary: "Structural breakdown, separation of concerns, scalability comparison.", frequency: "High (3 times)", topic: "System Design" },
       { id: 3, marks: 5, question: "What are vector embeddings? How does cosine similarity determine context relevance?", expectedAnswerSummary: "Mathematical definition of vector space, dot product, normalization, similarity score.", frequency: "Medium", topic: "Vector Search" },
-      { id: 4, marks: 5, question: "State the top 5 strategies for optimizing university exam prep using AI tools.", expectedAnswerSummary: "Active recall, PYQ trend mapping, flashcard repetition, concept summaries.", frequency: "High", topic: "Exam Strategy" },
+      { id: 4, marks: 5, question: "State the top 5 strategies for optimizing university exam prep using AI tools.", expectedAnswerSummary: "Active recall, flashcard repetition, concept summaries.", frequency: "High", topic: "Exam Strategy" },
       { id: 5, marks: 10, question: "Write step-by-step algorithms for text chunking and vector storage in MongoDB Atlas.", expectedAnswerSummary: "Window splitting algorithm, embedding generation call, index setup.", frequency: "High", topic: "Data Pipelines" }
-    ]
-  };
-}
-
-function generateFallbackPYQAnalysis() {
-  return {
-    overview: "Comprehensive PYQ trend analysis based on past 5 university examination papers. High emphasis detected on core concepts and practical system design.",
-    unitWeightage: [
-      { unit: "Unit 1: Fundamentals & System Design", percentage: 35, topicCount: 8 },
-      { unit: "Unit 2: Vector Search & AI Pipelines", percentage: 30, topicCount: 6 },
-      { unit: "Unit 3: MVC Controllers & API Routes", percentage: 20, topicCount: 5 },
-      { unit: "Unit 4: Exam Practice & Analytics", percentage: 15, topicCount: 4 }
-    ],
-    frequentlyAskedTopics: [
-      { topic: "RAG Architecture & Embeddings", occurrenceCount: 7, importance: "Critical" },
-      { topic: "MVC Pattern in Express.js", occurrenceCount: 5, importance: "High" },
-      { topic: "Cosine Similarity Computation", occurrenceCount: 4, importance: "High" },
-      { topic: "Active Recall & Flashcards", occurrenceCount: 3, importance: "Medium" }
-    ],
-    repeatedQuestions: [
-      "Explain the step-by-step working of RAG with vector search.",
-      "Differentiate between synchronous and asynchronous controller execution.",
-      "How to split long PDF documents for semantic search?"
-    ],
-    predictedQuestions: [
-      "Predictive Q1: Design a scalable AI study assistant using Node.js, Express, and Gemini API.",
-      "Predictive Q2: Evaluate performance metrics (Accuracy, Speed, Precision) in automated Quiz engines."
     ]
   };
 }
@@ -243,67 +215,6 @@ function generateFallbackInterviewQuestions() {
   };
 }
 
-function generateFallbackFormulaSheet() {
-  return {
-    title: "Essential Formulas & Quick Reference Sheet",
-    formulas: [
-      { name: "Cosine Similarity", expression: "cos(θ) = (A · B) / (||A|| * ||B||)", variables: "A, B = Vector arrays", unit: "Dimensionless [-1, 1]", notes: "Measures semantic alignment" },
-      { name: "Score Accuracy %", expression: "(Correct Answers / Total Questions) * 100", variables: "Correct, Total", unit: "%", notes: "Overall quiz performance" },
-      { name: "Negative Mark Total", expression: "Final Score = (Correct * Marks) - (Wrong * NegativeMark)", variables: "Correct, Wrong, Marks, NegativeMark", unit: "Points", notes: "Exam net score calculation" },
-      { name: "Chunk Overlap Index", expression: "Step = ChunkSize - OverlapSize", variables: "ChunkSize=350, Overlap=50", unit: "Words", notes: "Sliding window step distance" }
-    ]
-  };
-}
-
-function generateFallbackCodingQuestions() {
-  return {
-    codingQuestions: [
-      {
-        id: 1,
-        title: "Compute Cosine Similarity of Two Vectors",
-        difficulty: "Medium",
-        problemStatement: "Given two numerical arrays A and B of length N, calculate their cosine similarity score.",
-        inputOutputFormat: "Input: A = [1, 2, 3], B = [4, 5, 6]\nOutput: 0.9746318",
-        sampleCase: { input: "A = [1, 0], B = [0, 1]", output: "0.0" },
-        cppSolution: `#include <iostream>\n#include <vector>\n#include <cmath>\n\ndouble cosineSimilarity(const std::vector<double>& A, const std::vector<double>& B) {\n    double dot = 0.0, normA = 0.0, normB = 0.0;\n    for(size_t i=0; i<A.size(); ++i) {\n        dot += A[i]*B[i];\n        normA += A[i]*A[i];\n        normB += B[i]*B[i];\n    }\n    return dot / (std::sqrt(normA) * std::sqrt(normB));\n}`,
-        pythonSolution: `import numpy as np\n\ndef cosine_similarity(a, b):\n    return np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))`,
-        javaSolution: `public class Solution {\n    public static double cosineSimilarity(double[] a, double[] b) {\n        double dot = 0, normA = 0, normB = 0;\n        for (int i = 0; i < a.length; i++) {\n            dot += a[i] * b[i];\n            normA += a[i] * a[i];\n            normB += b[i] * b[i];\n        }\n        return dot / (Math.sqrt(normA) * Math.sqrt(normB));\n    }\n}`,
-        timeComplexity: "O(N)",
-        spaceComplexity: "O(1)"
-      }
-    ]
-  };
-}
-
-function generateFallbackStudyPlan() {
-  return {
-    planTitle: "14-Day High-Yield Academic Roadmap",
-    strategy: "Focus 60% time on high-weightage topics (Unit 1 & 2), 30% on active recall testing, and 10% on formula revision.",
-    dailySchedule: [
-      { day: 1, focusTopic: "Unit 1: Fundamentals & Definitions", tasks: ["Read Detailed Notes", "Create 10 Flashcards", "Solve 5 MCQs"], estimatedHours: 2 },
-      { day: 2, focusTopic: "Unit 1: Core Architecture", tasks: ["Generate Flowchart Diagram", "Review Key Examples"], estimatedHours: 2 },
-      { day: 3, focusTopic: "Unit 2: Vector Embeddings & RAG", tasks: ["Read Short Notes", "Solve 10 Practice MCQs"], estimatedHours: 2.5 },
-      { day: 4, focusTopic: "Unit 2: Cosine Similarity Algorithms", tasks: ["Code Solution for Vector Search", "Formula Sheet Review"], estimatedHours: 2 },
-      { day: 5, focusTopic: "Mid-Term Self Assessment", tasks: ["Attempt 15-Min Practice Test", "Analyze Weak Areas Report"], estimatedHours: 1.5 },
-      { day: 6, focusTopic: "Unit 3: PYQ Pattern Review", tasks: ["Analyze Top 10 Important Questions", "Attempt Viva Questions"], estimatedHours: 3 },
-      { day: 7, focusTopic: "Comprehensive Revision & Mock Exam", tasks: ["Take Full Mock Exam", "Review Cheat Sheet"], estimatedHours: 3 }
-    ],
-    milestones: ["50% Syllabus Mastered (Day 4)", "Full Practice Exam Cleared (Day 7)"]
-  };
-}
-
-function generateFallbackRevisionPlanner() {
-  return {
-    scheduleName: "Spaced Repetition Mastery Matrix",
-    phases: [
-      { phase: "Day 1 (Initial Encoding)", topics: ["Core Definitions", "Key Terms"], action: "Read Detailed Notes & Generate 5 Flashcards" },
-      { phase: "Day 3 (Active Recall)", topics: ["Architecture & Diagrams"], action: "Draw Mind Map & Take 5 MCQ Quiz" },
-      { phase: "Day 7 (Deep Memory)", topics: ["PYQs & Hard Concepts"], action: "Attempt Practice Test & Review Weak Topics" },
-      { phase: "Day 14 (Exam Readiness)", topics: ["Formula Sheet & Cheat Sheet"], action: "Final Speed Run Revision" }
-    ]
-  };
-}
-
 module.exports = {
   generateFallbackDetailedNotes,
   generateFallbackMCQs,
@@ -312,11 +223,6 @@ module.exports = {
   generateFallbackMindMap,
   generateFallbackFlashcards,
   generateFallbackImportantQuestions,
-  generateFallbackPYQAnalysis,
   generateFallbackVivaQuestions,
-  generateFallbackInterviewQuestions,
-  generateFallbackFormulaSheet,
-  generateFallbackCodingQuestions,
-  generateFallbackStudyPlan,
-  generateFallbackRevisionPlanner
+  generateFallbackInterviewQuestions
 };
